@@ -43,12 +43,15 @@ if (!t) {
   console.log('tenant atualizado:', slug);
 }
 
-if (!db.prepare('SELECT 1 FROM users WHERE tenant_id = ? AND email = ?').get(t.id, email)) {
+const usuario = db.prepare('SELECT id FROM users WHERE tenant_id = ? AND email = ?').get(t.id, email);
+if (!usuario) {
   db.prepare('INSERT INTO users (tenant_id, email, password_hash, role) VALUES (?,?,?,?)')
     .run(t.id, email, hashSenha(senha), 'owner');
   console.log('usuária criada:', email);
 } else {
-  console.log('usuária já existe (senha preservada):', email);
+  db.prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(hashSenha(senha), usuario.id);
+  db.prepare('DELETE FROM sessions WHERE user_id = ?').run(usuario.id);
+  console.log('usuária atualizada:', email);
 }
 
 if (!db.prepare('SELECT 1 FROM services WHERE tenant_id = ?').get(t.id)) {

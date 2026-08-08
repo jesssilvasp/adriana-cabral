@@ -23,14 +23,15 @@ Se você já tinha rodado uma versão anterior deste projeto, apague a pasta
 `server/node_modules` e o arquivo `server/package-lock.json` antes de instalar
 de novo — eles ainda apontam para o driver antigo, que exigia compilação.
 
-O `npm run seed` é idempotente: rodar de novo não sobrescreve dados — inclusive
-**não troca a senha** de um acesso que já existe. Para isso, use o comando abaixo.
+O `npm run seed` é idempotente para os dados da agenda e sincroniza a senha do
+acesso configurado em `ADMIN_EMAIL`/`ADMIN_PASSWORD`. O `npm start` executa essa
+inicialização automaticamente antes de subir o servidor.
 
 ## Login e senha do painel
 
 Primeiro acesso: `ADMIN_EMAIL` e `ADMIN_PASSWORD` no `.env` + `npm run seed`.
 
-Depois disso, o `.env` deixa de mandar. Para trocar:
+Para trocar a senha localmente sem reiniciar o serviço:
 
 ```bash
 npm run senha -- adriana@dominio.com "nova senha de pelo menos 10 caracteres"
