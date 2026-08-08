@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel · Adriana Cabral</title>
+<style>
+:root{
+  --roxo-principal:#6B5B95;
+  --roxo-escuro:#5A4A7F;
+  --roxo-claro:#9B8FB8;
+  --roxo-super-claro:#F0EBF8;
+  --branco:#FFFFFF;
+  --cinza-light:#F7F5FB;
+  --cinza-text:#4A4A4A;
+  --cinza-suave:#8B8B8B;
+  --ok:#4CAF50;
+  --erro:#E74C3C;
+  --aviso:#F39C12;
+  --fonte:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --raio:12px;
+  --raio-grande:16px;
+  --sombra:0 2px 8px rgba(107, 91, 149, 0.1);
+  --sombra-forte:0 4px 16px rgba(107, 91, 149, 0.15);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--cinza-light);color:var(--cinza-text);font-family:var(--fonte);font-size:15px;line-height:1.6}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.015em;color:var(--roxo-principal)}
+a{color:var(--roxo-principal);text-decoration:none;transition:color .2s}
+a:hover{color:var(--roxo-escuro)}
+:where(a,button,input,select,summary):focus-visible{outline:2.5px solid var(--roxo-principal);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin-inline:auto;padding:1.5rem}
+
+.topo{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:space-between;
+      padding:1.5rem;background:var(--branco);border-radius:var(--raio-grande);margin-bottom:1.5rem;box-shadow:var(--sombra)}
+.topo-marca{display:flex;align-items:center;gap:1rem}
+.topo-logo{width:50px;height:50px;background:var(--roxo-principal);border-radius:var(--raio);display:flex;align-items:center;justify-content:center;color:var(--branco);font-weight:700;font-size:1.5rem;flex-shrink:0}
+.topo strong{display:block;font-size:1.1rem;color:var(--roxo-principal)}
+.topo small{color:var(--cinza-suave);font-size:.9rem}
+
+button{font:inherit;cursor:pointer;border-radius:999px;border:1px solid transparent;
+       background:var(--cinza-light);color:var(--cinza-text);padding:.55rem 1.1rem;min-height:40px;transition:all .2s;font-weight:500}
+button:hover:not([disabled]){background:#E8DFF5;color:var(--roxo-principal);border-color:var(--roxo-principal)}
+button.primario{background:var(--roxo-principal);border-color:var(--roxo-principal);color:#fff;box-shadow:0 2px 6px rgba(107, 91, 149, 0.2)}
+button.primario:hover:not([disabled]){background:var(--roxo-escuro);box-shadow:0 4px 12px rgba(107, 91, 149, 0.3)}
+button.mini{min-height:36px;padding:.35rem .9rem;font-size:.85rem}
+button[disabled]{opacity:.5;cursor:not-allowed}
+
+input,select{font:inherit;padding:.65rem .9rem;min-height:44px;width:100%;
+             border:1px solid #D8CEE8;border-radius:var(--raio);background:var(--branco);color:var(--cinza-text);transition:border-color .2s}
+input:focus,select:focus{outline:none;border-color:var(--roxo-principal);box-shadow:0 0 0 3px var(--roxo-super-claro)}
+label{display:block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--roxo-principal);margin-bottom:.4rem;font-weight:600}
+
+.cartao{background:var(--branco);border:1px solid #E8DFF5;border-radius:var(--raio-grande);padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--sombra)}
+.cartao>h2{font-size:1.15rem;margin-bottom:1.2rem;color:var(--roxo-principal)}
+.abas{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.5rem;border-bottom:2px solid #E8DFF5;padding-bottom:.75rem}
+.abas button{background:transparent;border:none;color:var(--cinza-suave);border-bottom:3px solid transparent;border-radius:0;padding:.6rem 1rem;transition:all .2s}
+.abas button:hover{color:var(--roxo-principal)}
+.abas button[aria-selected="true"]{color:var(--roxo-principal);border-bottom-color:var(--roxo-principal);background:transparent}
+.grade{display:grid;gap:.9rem}
+@media(min-width:640px){.grade.c2{grid-template-columns:1fr 1fr}.grade.c3{grid-template-columns:repeat(3,1fr)}}
+
+.item{border:1px solid #E8DFF5;border-radius:var(--raio-grande);padding:1.1rem 1.2rem;margin-bottom:.8rem;background:var(--branco);box-shadow:var(--sombra);transition:box-shadow .2s}
+.item:hover{box-shadow:var(--sombra-forte)}
+.item .linha{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;justify-content:space-between}
+.item h3{font-size:1.05rem;color:var(--roxo-principal)}
+.item .meta{color:var(--cinza-suave);font-size:.88rem}
+.item .acoes{display:flex;flex-wrap:wrap;gap:.5rem}
+
+.selo{display:inline-block;padding:.2rem .7rem;border-radius:999px;font-size:.7rem;
+      letter-spacing:.04em;border:1px solid transparent;font-weight:600;margin-left:.5rem}
+.s-pending{background:#FFF4E6;color:#E67E22;border-color:#FFD699}
+.s-confirmed{background:#E8F8F0;color:#27AE60;border-color:#A9E5D9}
+.s-completed{background:#EEF5FB;color:#3498DB;border-color:#BFDBF7}
+.s-cancelled{background:#FFE8E8;color:#C0392B;border-color:#F5B6B3}
+.s-no_show{background:#F5E8F8;color:#8E44AD;border-color:#E1C3F0}
+
+.aviso{padding:1rem 1.15rem;border-radius:var(--raio);margin-bottom:1rem;font-size:.92rem;border-left:4px solid}
+.aviso.erro{background:#FDF0F0;color:#C0392B;border-left-color:#E74C3C}
+.aviso.ok{background:#F0FFF4;color:#27AE60;border-left-color:#4CAF50}
+.vazio{color:var(--cinza-suave);padding:2rem 0;text-align:center}
+
+#login{max-width:24rem;margin:10vh auto;padding:0 1.25rem}
+#login .cartao{padding:2rem}
+#login h1{font-size:1.4rem;margin-bottom:.25rem}
+#login>div>p{margin-top:0}
+.oculto{display:none !important}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--roxo-principal);padding:.6rem;font-weight:600;border-bottom:2px solid #E8DFF5}
+td{padding:.6rem;border-bottom:1px solid #E8DFF5}
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
+@media(max-width:640px){.abas{gap:.3rem;padding-bottom:.5rem}.abas button{padding:.5rem .8rem;font-size:.9rem}.topo{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<main id="login">
+  <div class="cartao">
+    <h1>Adriana Cabral</h1>
+    <p style="color:var(--cinza-suave);font-size:.9rem;margin:0 0 1.5rem">Painel de agendamentos</p>
+    <div id="loginErro" class="aviso erro oculto"></div>
+    <form id="formLogin" class="grade">
+      <div><label for="email">E-mail</label><input id="email" type="email" autocomplete="username" required></div>
+      <div><label for="senha">Senha</label><input id="senha" type="password" autocomplete="current-password" required></div>
+      <button class="primario" type="submit">Entrar</button>
+    </form>
+  </div>
+</main>
+
+<div id="app" class="wrap oculto">
+  <header class="topo">
+    <div class="topo-marca">
+      <div class="topo-logo">A</div>
+      <div>
+        <strong id="quem">—</strong>
+        <small id="fuso"></small>
+      </div>
+    </div>
+    <button id="sair" class="mini">Sair</button>
+  </header>
+
+  <div class="abas" role="tablist">
+    <button role="tab" aria-selected="true" data-aba="proximos">Próximos</button>
+    <button role="tab" aria-selected="false" data-aba="todos">Histórico</button>
+    <button role="tab" aria-selected="false" data-aba="bloqueios">Bloqueios</button>
+    <button role="tab" aria-selected="false" data-aba="horarios">Horários</button>
+    <button role="tab" aria-selected="false" data-aba="config">Configurações</button>
+  </div>
+
+  <div id="msg"></div>
+
+  <section id="painel-proximos" class="painel"><div id="listaProximos"></div></section>
+
+  <section id="painel-todos" class="painel oculto">
+    <div class="cartao">
+      <div class="grade c3">
+        <div><label for="fStatus">Status</label>
+          <select id="fStatus">
+            <option value="">Todos</option><option value="pending">Aguardando</option>
+            <option value="confirmed">Confirmado</option><option value="completed">Realizado</option>
+            <option value="cancelled">Cancelado</option><option value="no_show">Não compareceu</option>
+          </select></div>
+        <div><label for="fDe">De</label><input id="fDe" type="date"></div>
+        <div><label for="fAte">Até</label><input id="fAte" type="date"></div>
+      </div>
+      <button class="mini" style="margin-top:.9rem" id="filtrar">Filtrar</button>
+    </div>
+    <div id="listaTodos"></div>
+  </section>
+
+  <section id="painel-bloqueios" class="painel oculto">
+    <div class="cartao">
+      <h2>Bloquear um período</h2>
+      <div class="grade c3">
+        <div><label for="bIni">Início</label><input id="bIni" type="datetime-local"></div>
+        <div><label for="bFim">Fim</label><input id="bFim" type="datetime-local"></div>
+        <div><label for="bMotivo">Motivo (opcional)</label><input id="bMotivo" maxlength="140" placeholder="Férias, congresso…"></div>
+      </div>
+      <button class="primario mini" style="margin-top:.9rem" id="addBloqueio">Bloquear</button>
+    </div>
+    <div id="listaBloqueios"></div>
+  </section>
+
+  <section id="painel-horarios" class="painel oculto">
+    <div class="cartao">
+      <h2>Dias e horários de atendimento</h2>
+      <p style="color:var(--cinza-suave);font-size:.9rem;margin:-.5rem 0 1rem">
+        Cada linha é uma janela de atendimento. Deixe a modalidade em branco para valer para online e presencial.</p>
+      <div id="janelas"></div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem">
+        <button class="mini" id="addJanela">Adicionar janela</button>
+        <button class="primario mini" id="salvarJanelas">Salvar horários</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="painel-config" class="painel oculto">
+    <div class="cartao">
+      <h2>Regras da agenda</h2>
+      <div class="grade c2">
+        <div><label for="cDur">Duração da sessão (min)</label><input id="cDur" type="number" min="15" max="480" step="5"></div>
+        <div><label for="cBuf">Intervalo entre sessões (min)</label><input id="cBuf" type="number" min="0" max="240" step="5"></div>
+        <div><label for="cNot">Antecedência mínima (horas)</label><input id="cNot" type="number" min="0" max="720"></div>
+        <div><label for="cMax">Reservas até (dias à frente)</label><input id="cMax" type="number" min="1" max="365"></div>
+      </div>
+      <button class="primario mini" style="margin-top:1rem" id="salvarConfig">Salvar</button>
+    </div>
+  </section>
+</div>
+
+<script>
+const API = '/api/admin';
+const DIAS = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+const ROTULO = { pending:'Aguardando', confirmed:'Confirmado', completed:'Realizado',
+                 cancelled:'Cancelado', no_show:'Não compareceu' };
+let TZ = 'America/Sao_Paulo';
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+async function api(rota, opts = {}) {
+  const r = await fetch(API + rota, {
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'agenda-admin' },
+    ...opts,
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+  if (r.status === 401) { mostrarLogin(); throw new Error('nao_autenticado'); }
+  const dados = await r.json().catch(() => ({}));
+  if (!r.ok) throw Object.assign(new Error(dados.error || 'erro'), { dados, status: r.status });
+  return dados;
+}
+
+function aviso(texto, tipo = 'ok') {
+  $('#msg').innerHTML = `<div class="aviso ${tipo}">${esc(texto)}</div>`;
+  setTimeout(() => { $('#msg').innerHTML = ''; }, 6000);
+}
+const mostrarLogin = () => { $('#login').classList.remove('oculto'); $('#app').classList.add('oculto'); };
+
+/* ------------------------------ login ------------------------------ */
+$('#formLogin').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('#loginErro').classList.add('oculto');
+  try {
+    await api('/login', { method: 'POST', body: { email: $('#email').value, password: $('#senha').value } });
+    $('#senha').value = '';
+    iniciar();
+  } catch (err) {
+    $('#loginErro').textContent = err.status === 429
+      ? 'Muitas tentativas. Aguarde alguns minutos.' : 'E-mail ou senha incorretos.';
+    $('#loginErro').classList.remove('oculto');
+  }
+});
+
+$('#sair').addEventListener('click', async () => {
+  try { await api('/logout', { method: 'POST' }); } catch {}
+  mostrarLogin();
+});
+
+/* ------------------------------- abas ------------------------------- */
+document.querySelectorAll('[data-aba]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-aba]').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+  document.querySelectorAll('.painel').forEach(p => p.classList.add('oculto'));
+  $('#painel-' + b.dataset.aba).classList.remove('oculto');
+  ({ proximos: carregarProximos, todos: carregarTodos, bloqueios: carregarBloqueios,
+     horarios: carregarJanelas, config: carregarConfig })[b.dataset.aba]?.();
+}));
+
+/* ---------------------------- agendamentos ---------------------------- */
+function cartaoAgendamento(a) {
+  const acoes = [];
+  if (a.status === 'pending') acoes.push(['confirmed', 'Confirmar', 'primario']);
+  if (['pending','confirmed'].includes(a.status)) {
+    acoes.push(['completed', 'Marcar realizado', '']);
+    acoes.push(['no_show', 'Não compareceu', '']);
+    acoes.push(['cancelled', 'Cancelar', '']);
+  }
+  if (a.status === 'cancelled') acoes.push(['pending', 'Reabrir', '']);
+  const zap = a.whatsapp.replace(/\D/g, '');
+  return `<div class="item" data-id="${a.id}">
+    <div class="linha">
+      <div>
+        <h3>${esc(a.name)} <span class="selo s-${a.status}">${ROTULO[a.status]}</span></h3>
+        <div class="meta">${esc(a.data)} · ${esc(a.hora)} · ${a.modality === 'online' ? 'Online' : 'Presencial'} · código ${esc(a.code)}</div>
+        <div class="meta">
+          <a href="https://wa.me/${zap}" target="_blank" rel="noopener">${esc(a.whatsapp)}</a> ·
+          <a href="mailto:${esc(a.email)}">${esc(a.email)}</a>
+        </div>
+      </div>
+      <div class="acoes">
+        ${acoes.map(([s, r, c]) => `<button class="mini ${c}" data-status="${s}">${r}</button>`).join('')}
+        <button class="mini" data-reagendar="1">Reagendar</button>
+      </div>
+    </div>
+    <div class="reagendar oculto" style="margin-top:.75rem;border-top:1px solid #E8DFF5;padding-top:.75rem">
+      <div class="grade c3">
+        <div><label>Nova data</label><input type="date" class="rData"></div>
+        <div><label>Horário</label><select class="rHora"><option value="">Escolha a data</option></select></div>
+        <div style="display:flex;align-items:flex-end"><button class="primario mini rSalvar">Salvar</button></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function ligarAcoes(container) {
+  container.querySelectorAll('.item').forEach(item => {
+    const id = item.dataset.id;
+    item.querySelectorAll('[data-status]').forEach(b => b.addEventListener('click', async () => {
+      b.disabled = true;
+      try {
+        await api('/appointments/' + id, { method: 'PATCH', body: { status: b.dataset.status } });
+        aviso('Agendamento atualizado.');
+        recarregarAtual();
+      } catch (e) {
+        aviso(e.dados?.error === 'horario_ocupado' ? 'Esse horário já está ocupado.' : 'Não foi possível atualizar.', 'erro');
+        b.disabled = false;
+      }
+    }));
+
+    const painel = item.querySelector('.reagendar');
+    item.querySelector('[data-reagendar]').addEventListener('click', () => painel.classList.toggle('oculto'));
+    const dData = item.querySelector('.rData'), dHora = item.querySelector('.rHora');
+    dData.addEventListener('change', async () => {
+      dHora.innerHTML = '<option value="">Carregando…</option>';
+      try {
+        const { slots } = await api('/slots?date=' + dData.value + '&modality=online');
+        dHora.innerHTML = slots.length
+          ? slots.map(s => `<option>${s}</option>`).join('')
+          : '<option value="">Sem horários livres</option>';
+      } catch { dHora.innerHTML = '<option value="">Erro ao carregar</option>'; }
+    });
+    item.querySelector('.rSalvar').addEventListener('click', async () => {
+      if (!dData.value || !dHora.value) return aviso('Escolha data e horário.', 'erro');
+      try {
+        await api('/appointments/' + id, { method: 'PATCH', body: { date: dData.value, time: dHora.value } });
+        aviso('Reagendado.'); recarregarAtual();
+      } catch (e) {
+        aviso(e.dados?.error === 'horario_ocupado' ? 'Esse horário já está ocupado.' : 'Não foi possível reagendar.', 'erro');
+      }
+    });
+  });
+}
+
+async function carregarProximos() {
+  const alvo = $('#listaProximos');
+  alvo.innerHTML = '<div class="vazio">Carregando…</div>';
+  const { appointments, timezone } = await api('/appointments?scope=proximos');
+  TZ = timezone;
+  alvo.innerHTML = appointments.length
+    ? appointments.map(cartaoAgendamento).join('')
+    : '<div class="cartao vazio">Nenhum atendimento marcado por enquanto.</div>';
+  ligarAcoes(alvo);
+}
+
+async function carregarTodos() {
+  const alvo = $('#listaTodos');
+  alvo.innerHTML = '<div class="vazio">Carregando…</div>';
+  const q = new URLSearchParams();
+  if ($('#fStatus').value) q.set('status', $('#fStatus').value);
+  if ($('#fDe').value) q.set('from', $('#fDe').value);
+  if ($('#fAte').value) q.set('to', $('#fAte').value);
+  const { appointments } = await api('/appointments?' + q);
+  alvo.innerHTML = appointments.length
+    ? appointments.map(cartaoAgendamento).join('')
+    : '<div class="cartao vazio">Nada encontrado com esses filtros.</div>';
+  ligarAcoes(alvo);
+}
+$('#filtrar').addEventListener('click', carregarTodos);
+
+/* ------------------------------ bloqueios ------------------------------ */
+async function carregarBloqueios() {
+  const { blocks } = await api('/blocks');
+  $('#listaBloqueios').innerHTML = blocks.length ? blocks.map(b => `
+    <div class="item"><div class="linha">
+      <div><h3>${esc(b.reason || 'Período bloqueado')}</h3>
+        <div class="meta">${esc(b.inicio.data)}, ${esc(b.inicio.hora)} → ${esc(b.fim.data)}, ${esc(b.fim.hora)}</div></div>
+      <button class="mini" data-del="${b.id}">Remover</button>
+    </div></div>`).join('') : '<div class="cartao vazio">Nenhum bloqueio ativo.</div>';
+  $('#listaBloqueios').querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async () => {
+    await api('/blocks/' + b.dataset.del, { method: 'DELETE' });
+    aviso('Bloqueio removido.'); carregarBloqueios();
+  }));
+}
+
+$('#addBloqueio').addEventListener('click', async () => {
+  if (!$('#bIni').value || !$('#bFim').value) return aviso('Preencha início e fim.', 'erro');
+  try {
+    await api('/blocks', { method: 'POST', body: {
+      starts_at: new Date($('#bIni').value).toISOString(),
+      ends_at: new Date($('#bFim').value).toISOString(),
+      reason: $('#bMotivo').value } });
+    $('#bIni').value = $('#bFim').value = $('#bMotivo').value = '';
+    aviso('Período bloqueado.'); carregarBloqueios();
+  } catch { aviso('Não foi possível bloquear. Confira as datas.', 'erro'); }
+});
+
+/* ------------------------------- janelas ------------------------------- */
+function linhaJanela(j = { weekday: 1, start_time: '09:00', end_time: '12:00', modality: '' }) {
+  const d = document.createElement('div');
+  d.className = 'janela grade c2';
+  d.style.cssText = 'grid-template-columns:1fr 1fr 1fr 1fr auto;align-items:end;margin-bottom:.6rem';
+  d.innerHTML = `
+    <div><label>Dia</label><select class="jDia">${DIAS.map((n, i) =>
+      `<option value="${i}" ${i === j.weekday ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+    <div><label>Das</label><input class="jIni" type="time" value="${j.start_time}"></div>
+    <div><label>Até</label><input class="jFim" type="time" value="${j.end_time}"></div>
+    <div><label>Modalidade</label><select class="jMod">
+      <option value="" ${!j.modality ? 'selected' : ''}>Ambas</option>
+      <option value="online" ${j.modality === 'online' ? 'selected' : ''}>Online</option>
+      <option value="presencial" ${j.modality === 'presencial' ? 'selected' : ''}>Presencial</option>
+    </select></div>
+    <button class="mini jDel" type="button" aria-label="Remover janela">Remover</button>`;
+  d.querySelector('.jDel').addEventListener('click', () => d.remove());
+  return d;
+}
+
+async function carregarJanelas() {
+  const { availability } = await api('/availability');
+  const c = $('#janelas'); c.innerHTML = '';
+  (availability.length ? availability : [undefined]).forEach(j => c.appendChild(linhaJanela(j)));
+}
+$('#addJanela').addEventListener('click', () => $('#janelas').appendChild(linhaJanela()));
+$('#salvarJanelas').addEventListener('click', async () => {
+  const janelas = [...document.querySelectorAll('.janela')].map(d => ({
+    weekday: Number(d.querySelector('.jDia').value),
+    start_time: d.querySelector('.jIni').value,
+    end_time: d.querySelector('.jFim').value,
+    modality: d.querySelector('.jMod').value || null
+  }));
+  if (janelas.some(j => !j.start_time || !j.end_time || j.start_time >= j.end_time)) {
+    return aviso('Confira os horários: o fim precisa ser depois do início.', 'erro');
+  }
+  try { await api('/availability', { method: 'PUT', body: { availability: janelas } }); aviso('Horários salvos.'); }
+  catch { aviso('Não foi possível salvar.', 'erro'); }
+});
+
+/* ----------------------------- configurações ----------------------------- */
+async function carregarConfig() {
+  const { settings, service } = await api('/settings');
+  $('#cDur').value = service.durationMin; $('#cBuf').value = service.bufferMin;
+  $('#cNot').value = settings.min_notice_hours; $('#cMax').value = settings.max_advance_days;
+}
+$('#salvarConfig').addEventListener('click', async () => {
+  try {
+    await api('/settings', { method: 'PUT', body: {
+      durationMin: +$('#cDur').value, bufferMin: +$('#cBuf').value,
+      min_notice_hours: +$('#cNot').value, max_advance_days: +$('#cMax').value } });
+    aviso('Configurações salvas.');
+  } catch { aviso('Valores fora do permitido.', 'erro'); }
+});
+
+/* -------------------------------- início -------------------------------- */
+function recarregarAtual() {
+  const aba = document.querySelector('[data-aba][aria-selected="true"]').dataset.aba;
+  ({ proximos: carregarProximos, todos: carregarTodos, bloqueios: carregarBloqueios })[aba]?.();
+}
+
+async function iniciar() {
+  try {
+    const me = await api('/me');
+    TZ = me.tenant.timezone;
+    $('#quem').textContent = me.tenant.name;
+    $('#fuso').textContent = `${me.email} · ${me.tenant.timezone} · sessão de ${me.service.durationMin} min`;
+    $('#login').classList.add('oculto');
+    $('#app').classList.remove('oculto');
+    carregarProximos();
+  } catch { mostrarLogin(); }
+}
+iniciar();
+</script>
+</body>
+</html>

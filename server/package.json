@@ -1,0 +1,19 @@
+{
+  "name": "agenda-modulo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Módulo de agendamento reutilizável para landing pages de profissionais",
+  "scripts": {
+    "start": "node src/index.js",
+    "seed": "node src/seed.js",
+    "test": "node test/api.test.js",
+    "senha": "node src/senha.js"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}
