@@ -1,3 +1,5 @@
 node_modules/
 data/
-# .env    ← comente assim
+.env
+.env.*
+!.env.example
